@@ -47,7 +47,15 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'dj_rest_auth',
+    # rest auth
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
 
     # Local
     "accounts.apps.AccountsConfig",
