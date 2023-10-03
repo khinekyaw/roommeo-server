@@ -21,17 +21,11 @@ $ pipenv install
 $ pipenv shell
 ```
 
-3. migrate
-
-```
-$ python manage.py migrate
-```
-
 ##
 
 ## Setup
 
-Create `.env` file that include:
+1. create `.env` file that include:
 
 ```env eg
 DEBUG = True
@@ -39,6 +33,20 @@ SECRET_KEY = roommeo-secret
 GOOGLE_ID =
 GOOGLE_SECRET =
 GOOGLE_REDIRECT_URL = http://localhost:3000
+```
+
+2. migrate
+
+```
+$ python manage.py migrate
+```
+
+3. create a '\static' folder in root directory
+
+4. collectstatic
+
+```
+$ python manage.py collectstatic
 ```
 
 ## Start development
