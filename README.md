@@ -10,15 +10,15 @@ Backend Api for Roommeo
 1. clone the repo
 
 ```
-$ git clone https://github.com/khinekyaw/roommeo-server.git
+git clone https://github.com/khinekyaw/roommeo-server.git
 ```
 
 2. install packages
 
 ```
-$ cd roommeo-server
-$ pipenv install
-$ pipenv shell
+cd roommeo-server
+pipenv install
+pipenv shell
 ```
 
 ##
@@ -29,7 +29,7 @@ $ pipenv shell
 
 ```env eg
 DEBUG = True
-SECRET_KEY = roommeo-secret
+SECRET_KEY = your-secret
 GOOGLE_ID =
 GOOGLE_SECRET =
 GOOGLE_REDIRECT_URL = http://localhost:3000
@@ -38,7 +38,7 @@ GOOGLE_REDIRECT_URL = http://localhost:3000
 2. migrate
 
 ```
-$ python manage.py migrate
+python manage.py migrate
 ```
 
 3. create a '\static' folder in root directory
@@ -46,7 +46,7 @@ $ python manage.py migrate
 4. collectstatic
 
 ```
-$ python manage.py collectstatic
+python manage.py collectstatic
 ```
 
 ## Start development
