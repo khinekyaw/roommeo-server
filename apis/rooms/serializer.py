@@ -17,7 +17,9 @@ class AmenitySerializer(ModelSerializer):
 
 class RoomSerializer(ModelSerializer):
     first_image = SerializerMethodField()
-    amenities = AmenitySerializer(many=True, read_only=True)
+    amenities = AmenitySerializer(
+        many=True,
+    )
 
     def get_first_image(self, room):
         first_image = room.images.first()
