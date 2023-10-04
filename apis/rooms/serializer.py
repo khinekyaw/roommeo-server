@@ -17,9 +17,7 @@ class AmenitySerializer(ModelSerializer):
 
 class RoomSerializer(ModelSerializer):
     first_image = SerializerMethodField()
-    amenities = AmenitySerializer(
-        many=True,
-    )
+    amenities = AmenitySerializer(many=True)
 
     def get_first_image(self, room):
         first_image = room.images.first()
@@ -31,9 +29,12 @@ class RoomSerializer(ModelSerializer):
 
         return None
 
+    def create(self, validated_data):
+        return Room.objects.create_room(validated_data)
+
     class Meta:
         model = Room
-        exclude = ["title", "host"]
+        exclude = ["title"]
 
 
 class RoomDetailSerializer(ModelSerializer):

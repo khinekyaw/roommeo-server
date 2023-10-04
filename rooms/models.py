@@ -2,6 +2,20 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
+class RoomManager(models.Manager):
+    def create_room(self, validated_data):
+        amenities_data = validated_data.pop("amenities")
+        room = Room.objects.create(**validated_data)
+
+        if amenities_data:
+            print(amenities_data)
+            for amenity_id in amenities_data:
+                amenity = Amenity.objects.get(name=amenity_id.name)
+                room.amenities.add(amenity)
+
+        return room
+
+
 class Room(models.Model):
     ROOM_TYPES = [
         ("single", "Single Room"),
@@ -37,6 +51,9 @@ class Room(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # Manage
+    objects = RoomManager()
 
     def __str__(self):
         return self.title
