@@ -1,23 +1,28 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework import serializers
 
 from rooms.models import Room, RoomImage, Amenity
 
 
-class RoomImageSerializer(ModelSerializer):
+class RoomImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomImage
         fields = "__all__"
 
 
-class AmenitySerializer(ModelSerializer):
+class AmenitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Amenity
         fields = "__all__"
 
 
-class RoomSerializer(ModelSerializer):
-    first_image = SerializerMethodField()
-    amenities = AmenitySerializer(many=True)
+class RoomSerializer(serializers.ModelSerializer):
+    first_image = serializers.SerializerMethodField()
+    amenities = serializers.PrimaryKeyRelatedField(
+        queryset=Amenity.objects.all(), many=True, write_only=True
+    )
+    host = serializers.HiddenField(
+        default=serializers.CurrentUserDefault(),
+    )
 
     def get_first_image(self, room):
         first_image = room.images.first()
@@ -34,10 +39,14 @@ class RoomSerializer(ModelSerializer):
 
     class Meta:
         model = Room
-        exclude = ["title"]
+        fields = "__all__"
+        extra_kwargs = {
+            "title": {"write_only": True},
+            "description": {"write_only": True},
+        }
 
 
-class RoomDetailSerializer(ModelSerializer):
+class RoomDetailSerializer(serializers.ModelSerializer):
     images = RoomImageSerializer(many=True, read_only=True)
     amenities = AmenitySerializer(many=True, read_only=True)
 
