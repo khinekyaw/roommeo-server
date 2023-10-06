@@ -1,12 +1,13 @@
 from rest_framework import serializers
 
 from rooms.models import Room, RoomImage, Amenity
+from apis.accounts.serializers import UserSerializer
 
 
 class RoomImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomImage
-        fields = "__all__"
+        fields = ("id", "image")
 
 
 class AmenitySerializer(serializers.ModelSerializer):
@@ -49,6 +50,7 @@ class RoomSerializer(serializers.ModelSerializer):
 class RoomDetailSerializer(serializers.ModelSerializer):
     images = RoomImageSerializer(many=True, read_only=True)
     amenities = AmenitySerializer(many=True, read_only=True)
+    host = UserSerializer(read_only=True)
 
     class Meta:
         model = Room

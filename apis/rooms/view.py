@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from apis.permissions import IsHost, ReadOnly
 from rooms.models import Room, Amenity
-from .serializer import RoomSerializer, RoomDetailSerializer
+from .serializers import RoomSerializer, RoomDetailSerializer
 
 
 class RoomViewSet(viewsets.ModelViewSet):
