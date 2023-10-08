@@ -5,6 +5,8 @@ from apis.accounts.serializers import UserSerializer
 
 
 class RoomImageSerializer(serializers.ModelSerializer):
+    # room = serializers.HiddenField(default=)
+
     class Meta:
         model = RoomImage
         fields = ("id", "image")
@@ -51,6 +53,9 @@ class RoomDetailSerializer(serializers.ModelSerializer):
     images = RoomImageSerializer(many=True, read_only=True)
     amenities = AmenitySerializer(many=True, read_only=True)
     host = UserSerializer(read_only=True)
+    image_ids_to_delete = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
 
     class Meta:
         model = Room

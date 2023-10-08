@@ -34,7 +34,14 @@ class RoomViewSet(viewsets.ModelViewSet):
         room = serializer.save()
         images_data = self.request.data.getlist("images")
 
-        room.images.all().delete()
+        image_ids_to_delete = self.request.data.getlist("image_ids_to_delete", [])
+
+        for image_id in image_ids_to_delete:
+            try:
+                image_to_delete = room.images.get(id=image_id)
+                image_to_delete.delete()
+            except RoomImage.DoesNotExist:
+                pass
 
         for image_data in images_data:
             image_serializer = RoomImageSerializer(data={"image": image_data})
@@ -42,3 +49,9 @@ class RoomViewSet(viewsets.ModelViewSet):
                 image_serializer.save(room=room)
             else:
                 raise serializers.ValidationError(image_serializer.errors)
+
+
+class RoomImageViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsHost | ReadOnly]
+    queryset = RoomImage.objects.all()
+    serializer_class = RoomImageSerializer

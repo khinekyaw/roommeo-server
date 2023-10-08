@@ -8,4 +8,7 @@ class ReadOnly(BasePermission):
 
 class IsHost(BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.host == request.user
+        if hasattr(obj, "host"):
+            return obj.host == request.user
+        if hasattr(obj, "room"):
+            return obj.room.host == request.user
